@@ -1,11 +1,11 @@
 import React from "react";
 import { FlatList, TouchableOpacity } from "react-native";
-import data from "./data.json";
+import { connect } from "react-redux";
 import TodoItem from "../Item/TodoItem";
 
-export default class TodoList extends React.Component {
+class TodoList extends React.Component {
   static defaultProps = {
-    todos: data
+    todos: []
   };
 
   renderItem = ({ item }) => {
@@ -23,3 +23,11 @@ export default class TodoList extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    todos: state.todo.list
+  };
+};
+
+export default connect(mapStateToProps)(TodoList);
