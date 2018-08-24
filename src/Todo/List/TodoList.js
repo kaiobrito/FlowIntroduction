@@ -1,13 +1,26 @@
+//@flow
 import React from "react";
 import { FlatList, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import TodoItem from "../Item/TodoItem";
 import { actionCreators } from "./Actions";
+import type { TodoActionCreator } from "./Actions";
+import type { Todo, AppState } from "../../Types";
 
-class TodoList extends React.PureComponent {
+type Props = {
+  todos: Array<Todo>,
+  fetch: () => void,
+  toggleTodo: Todo => void
+};
+
+class TodoList extends React.PureComponent<Props> {
   static defaultProps = {
     todos: []
   };
+
+  componentDidMount() {
+    this.props.fetch();
+  }
 
   renderItem = ({ item }) => {
     return (
@@ -29,15 +42,17 @@ class TodoList extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: AppState) => {
   return {
     todos: state.todo.list
   };
 };
 
-const mapActions = {
+const mapActions: { [any]: TodoActionCreator } = {
+  fetch: actionCreators.fetch,
   toggleTodo: actionCreators.toggle
 };
+
 export default connect(
   mapStateToProps,
   mapActions

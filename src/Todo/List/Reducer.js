@@ -1,15 +1,23 @@
+//@flow
+
 import data from "./data.json";
 import { actionTypes } from "./Actions";
+import type { TodoAction } from "./Actions";
+import type { TodoReducer, Todo } from "@Types";
 
-const INITIAL_STATE = {
-  list: data
+const INITIAL_STATE: TodoReducer = {
+  list: []
 };
 
-export default (state = INITIAL_STATE, { type, payload }) => {
-  switch (type) {
+export default (state: TodoReducer = INITIAL_STATE, action: TodoAction) => {
+  switch (action.type) {
+    case actionTypes.FETCH:
+      return { ...state, list: data };
     case actionTypes.TOGGLE:
+      const todo = (Object.assign({}, action.payload): Todo);
+
       const list = state.list.map(item => {
-        if (item.id === payload.id) {
+        if (item.id === todo.id) {
           return { ...item, done: !item.done };
         }
         return item;

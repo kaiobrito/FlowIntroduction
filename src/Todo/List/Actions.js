@@ -1,10 +1,26 @@
+//@flow
+import type { Todo } from "../../Types/index";
+
 export const actionTypes = {
+  FETCH: "TODO/FETCH",
   TOGGLE: "TODO/TOGGLE"
 };
 
-export const actionCreators = {
-  toggle: todo => ({
-    type: actionTypes.TOGGLE,
-    payload: todo
-  })
+type TYPES = $Values<typeof actionTypes>;
+
+export type TodoAction = { type: TYPES, payload?: any | Todo };
+
+export type TodoActionCreator = { [string]: (any) => TodoAction };
+
+const fetch: () => TodoAction = () => ({
+  type: actionTypes.FETCH
+});
+const toggle: (todo: Todo) => TodoAction = (todo: Todo) => ({
+  type: actionTypes.TOGGLE,
+  payload: todo
+});
+
+export const actionCreators: TodoActionCreator = {
+  fetch,
+  toggle
 };
