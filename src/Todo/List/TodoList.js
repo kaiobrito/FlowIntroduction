@@ -2,14 +2,19 @@ import React from "react";
 import { FlatList, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import TodoItem from "../Item/TodoItem";
+import { actionCreators } from "./Actions";
 
-class TodoList extends React.Component {
+class TodoList extends React.PureComponent {
   static defaultProps = {
     todos: []
   };
 
   renderItem = ({ item }) => {
-    return <TodoItem todo={item} />;
+    return (
+      <TouchableOpacity onPress={() => this.props.toggleTodo(item)}>
+        <TodoItem todo={item} />
+      </TouchableOpacity>
+    );
   };
 
   render() {
@@ -30,4 +35,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(TodoList);
+const mapActions = {
+  toggleTodo: actionCreators.toggle
+};
+export default connect(
+  mapStateToProps,
+  mapActions
+)(TodoList);
