@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1",
+    "name": "Breakfast 🍞🍳🥓🥤",
+    "done": false
+  },
+  {
+    "id": "2",
+    "name": "Wash Car",
+    "done": false
+  },
+  {
+    "id": "3",
+    "name": "Practice my talk",
+    "done": false
+  },
+  {
+    "id": "4",
+    "name": "Pick-Up Tony at the station",
+    "done": false
+  },
+  {
+    "id": "5",
+    "name": "Buy Snacks for Meetup",
+    "done": false
+  },
+  {
+    "id": "6",
+    "name": "Lunch with GDG speakers",
+    "done": false
+  },
+  {
+    "id": "7",
+    "name": "Relocate to the event",
+    "done": false
+  }
+]
