@@ -3,32 +3,25 @@ import React from "react";
 import { View, TouchableOpacity, ScrollView } from "react-native";
 import { List } from "immutable";
 import { connect } from "react-redux";
+import type { AppState, Todo } from "@Types";
 import TodoItem from "../Item/TodoItem";
 import { actionCreators } from "./Actions";
 import type { TodoActionCreator } from "./Actions";
-import type { AppState, Todo } from "@Types";
 
 type Props = {
   todos: List<Todo>,
-  fetch: () => void,
-  toggleTodo: Todo => void
+  fetch: () => any | void,
+  toggle: Todo => any | void
 };
 
 class TodoList extends React.PureComponent<Props> {
-  static defaultProps = {
-    todos: []
-  };
-
   componentDidMount() {
     this.props.fetch();
   }
 
   renderItem = (item: Todo) => {
     return (
-      <TouchableOpacity
-        key={item.id}
-        onPress={() => this.props.toggleTodo(item)}
-      >
+      <TouchableOpacity key={item.id} onPress={() => this.props.toggle(item)}>
         <TodoItem todo={item} />
       </TouchableOpacity>
     );
@@ -51,9 +44,14 @@ const mapStateToProps: MapProps = (state: AppState) => {
   };
 };
 
-const mapActions: { [any]: TodoActionCreator } = {
+type MapActions = {
+  fetch: $ElementType<Props, "fetch">,
+  toggle: $ElementType<Props, "toggle">
+};
+
+const mapActions: MapActions = {
   fetch: actionCreators.fetch,
-  toggleTodo: actionCreators.toggle
+  toggle: actionCreators.toggle
 };
 
 export default connect(

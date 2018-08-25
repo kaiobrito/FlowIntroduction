@@ -1,5 +1,5 @@
 //@flow
-import type { Todo } from "../../Types/index";
+import type { Todo } from "@Types";
 
 export const actionTypes = {
   FETCH: "TODO/FETCH",
