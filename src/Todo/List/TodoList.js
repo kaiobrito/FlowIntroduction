@@ -1,15 +1,15 @@
 //@flow
 import React from "react";
-import { FlatList, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, ScrollView } from "react-native";
+import { List } from "immutable";
 import { connect } from "react-redux";
 import TodoItem from "../Item/TodoItem";
 import { actionCreators } from "./Actions";
 import type { TodoActionCreator } from "./Actions";
-import type { Todo, AppState } from "../../Types";
-import { List } from "immutable";
+import type { AppState, Todo } from "@Types";
 
 type Props = {
-  todos: Array<Todo>,
+  todos: List<Todo>,
   fetch: () => void,
   toggleTodo: Todo => void
 };
@@ -23,9 +23,12 @@ class TodoList extends React.PureComponent<Props> {
     this.props.fetch();
   }
 
-  renderItem = ({ item }) => {
+  renderItem = (item: Todo) => {
     return (
-      <TouchableOpacity onPress={() => this.props.toggleTodo(item)}>
+      <TouchableOpacity
+        key={item.id}
+        onPress={() => this.props.toggleTodo(item)}
+      >
         <TodoItem todo={item} />
       </TouchableOpacity>
     );
@@ -33,17 +36,16 @@ class TodoList extends React.PureComponent<Props> {
 
   render() {
     return (
-      <FlatList
-        style={{ flex: 1, width: "100%" }}
-        data={this.props.todos}
-        keyExtractor={item => item.id}
-        renderItem={this.renderItem}
-      />
+      <ScrollView style={{ flex: 1, width: "100%" }}>
+        <View style={{ flex: 1 }}>{this.props.todos.map(this.renderItem)}</View>
+      </ScrollView>
     );
   }
 }
 
-const mapStateToProps = (state: AppState) => {
+type MapProps = AppState => { todos: $ElementType<Props, "todos"> };
+
+const mapStateToProps: MapProps = (state: AppState) => {
   return {
     todos: state.todo.list
   };
