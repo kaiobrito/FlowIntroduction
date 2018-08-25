@@ -9,6 +9,10 @@ class TodoList extends React.PureComponent {
     todos: []
   };
 
+  componentDidMount() {
+    this.props.fetch();
+  }
+
   renderItem = ({ item }) => {
     return (
       <TouchableOpacity onPress={() => this.props.toggleTodo(item)}>
@@ -36,6 +40,7 @@ const mapStateToProps = state => {
 };
 
 const mapActions = {
+  fetch: actionCreators.fetch,
   toggleTodo: actionCreators.toggle
 };
 export default connect(

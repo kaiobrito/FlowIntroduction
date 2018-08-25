@@ -14,9 +14,13 @@ const styles = StyleSheet.create({
   }
 });
 
-export default props => (
-  <View style={styles.container}>
-    <Switch value={props.todo.done} disabled />
-    <Text style={styles.text}>{props.todo.name}</Text>
-  </View>
-);
+export default class TodoItem extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Switch value={this.props.todo.done} disabled />
+        <Text style={styles.text}>{this.props.todo.name}</Text>
+      </View>
+    );
+  }
+}
