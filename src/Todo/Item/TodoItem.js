@@ -3,7 +3,7 @@ import React from "react";
 import { View, Switch, Text, StyleSheet } from "react-native";
 import type { Todo } from "@Types";
 
-const styles = StyleSheet.create({
+const styles: { [string]: mixed } = StyleSheet.create({
   container: {
     flex: 1,
     height: 50,
@@ -17,12 +17,16 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  todo: Todo
+  +todo: Todo
 };
 
-export default (props: Props) => (
-  <View style={styles.container}>
-    <Switch value={props.todo.done} disabled />
-    <Text style={styles.text}>{props.todo.name}</Text>
-  </View>
-);
+export default class TodoItem extends React.PureComponent<Props> {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Switch value={this.props.todo.done} disabled />
+        <Text style={styles.text}>{this.props.todo.name}</Text>
+      </View>
+    );
+  }
+}
