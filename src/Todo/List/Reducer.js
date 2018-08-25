@@ -1,28 +1,31 @@
 //@flow
-
-import data from "./data.json";
+import { Record } from "immutable";
+import type { Todo, TodoReducer } from "@Types";
+import { TodoFactory } from "@Types";
 import { actionTypes } from "./Actions";
 import type { TodoAction } from "./Actions";
-import type { TodoReducer, Todo } from "@Types";
+import data from "./data.json";
 
-const INITIAL_STATE: TodoReducer = {
+const INITIAL_STATE: TodoReducer = Record({
   list: []
-};
+})();
+
+const todos: Array<Todo> = data.map(TodoFactory);
 
 export default (state: TodoReducer = INITIAL_STATE, action: TodoAction) => {
   switch (action.type) {
     case actionTypes.FETCH:
-      return { ...state, list: data };
+      return state.set("list", todos);
     case actionTypes.TOGGLE:
-      const todo = (Object.assign({}, action.payload): Todo);
-
-      const list = state.list.map(item => {
-        if (item.id === todo.id) {
-          return { ...item, done: !item.done };
-        }
-        return item;
+      return state.update("list", (list: Array<Todo>) => {
+        const todo = (action.payload: any | Todo);
+        return list.map((item: Todo) => {
+          if (item.id === todo.id) {
+            return item.set("done", !item.done);
+          }
+          return item;
+        });
       });
-      return Object.assign(state, { list: list });
     default:
       return state;
   }

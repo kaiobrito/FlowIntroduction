@@ -8,6 +8,7 @@
     "flow": "flow"
   },
   "dependencies": {
+    "immutable": "^4.0.0-rc.9",
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-redux": "^5.0.7",

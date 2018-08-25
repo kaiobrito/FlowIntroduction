@@ -6,6 +6,7 @@ import TodoItem from "../Item/TodoItem";
 import { actionCreators } from "./Actions";
 import type { TodoActionCreator } from "./Actions";
 import type { Todo, AppState } from "../../Types";
+import { List } from "immutable";
 
 type Props = {
   todos: Array<Todo>,
